@@ -352,15 +352,24 @@ def estimate_with_nearest(gen, fields, class_to_spec, prices, means):
 def estimate_nearest(gen, fields):
     val = 1.0
     clusters_sp = defaultdict(set)
+    order_dict = defaultdict(list)
     for i in range(len(gen)):
         g = gen[i]
         field = fields[i]
         clusters_sp[field.cluster].add(g)
+        order_dict[field.cluster].append(g)
 
-    for i in range(len(gen)):
-        if i != 0:
-            if g != gen[i-1] and fields[i-1].cluster == field.cluster:
-                val *= 0.8
+    for key, values in order_dict.items():
+        for i in range(len(values)):
+            if i != 0:
+                if g != gen[i-1] and fields[i-1].cluster == field.cluster:
+                    val *= 0.8
+
+
+    # for i in range(len(gen)):
+    #     if i != 0:
+    #         if g != gen[i-1] and fields[i-1].cluster == field.cluster:
+    #             val *= 0.8
 
     
     for key, value in clusters_sp.items():
@@ -504,8 +513,8 @@ most_pricest_converted = convert_to_names(most_pricest[0][1], class_to_spec)
 most_shortest_converted = convert_to_names(most_shortest[0][1], class_to_spec)
 most_optimal_converted = convert_to_names(best[1], class_to_spec)
 
-df1 = pandas.DataFrame([p for p in zip(most_optimal_converted, most_pricest_converted, most_shortest_converted)],
-                       columns=['Самый оптимальный', 'Который принесет самую большую прибыль', 'Оптимальный по кластеризации'])
+df1 = pandas.DataFrame([p for p in zip(range(1, len(most_optimal_converted) + 1), most_optimal_converted, most_pricest_converted, most_shortest_converted)],
+                       columns=['№ поля', 'Самый оптимальный', 'Который принесет самую большую прибыль', 'Оптимальный по кластеризации'])
 
 most_pricest_profit = calc_overall_income(most_pricest[0][1], fields, class_to_spec, prices, mean_vol_3_years)
 most_shortest_profit = calc_overall_income(most_shortest[0][1],  fields, class_to_spec, prices, mean_vol_3_years)
