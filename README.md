@@ -12,7 +12,7 @@
 1. В папке, где находится проект открываем терминал, выполняем команду `jupyter notebook`
 2. Заходим на страницу http://localhost:8888/, ищем файл **cook.ipynb**
 
-[http://math-info.hse.ru/f/2018-19/py-polit/instruction_JN.pdf](Инструкция, как работать с Jupiter notebook)
+[Инструкция, как работать с Jupiter notebook](http://math-info.hse.ru/f/2018-19/py-polit/instruction_JN.pdf) 
 
 ## Через python3
 В папке с проектом выполняем команду `python3 cook.py`
